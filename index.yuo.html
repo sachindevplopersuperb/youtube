@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YouTube Search</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+
+        #container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        #arrow img {
+            display: flex;
+            width: 35px;
+            height: 35px;
+            margin-top: 6px;
+        }
+        #mic img {
+            display: flex;
+            width: 35px;
+            height: 35px;
+            margin-top: 6px;
+            border-radius: 50%;
+            background: lightgray;
+        }
+        input {
+            display: flex;
+            width: 300px;
+            height: 35px;
+            margin: 11px;
+            padding: 5px ;
+            border-radius: 20px;
+            text-align: center;
+            background: lightgray;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="arrow">
+        <a href="indexyoutube.html"><img src="arrow.png"></a>
+    </div>
+    <div id="input">
+        <input type="text" name="" placeholder="search Youtube" id="query" oninput="searchYoutube()">
+    </div>
+    <div id="mic">
+        <img src="mic.png">
+    </div>
+</div>
+<div id="result"></div>
+<script type="text/javascript">
+    async function searchYoutube() {
+        var q = document.getElementById("query").value;
+        var API_KEY = "AIzaSyCk49QJsUosbKHTMrTDrvHm_XLYLn1NwPA";  // Replace with your actual YouTube API key
+        var res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=${q}&key=${API_KEY}`);
+        var data = await res.json();
+
+        var result = document.getElementById("result");
+
+        result.innerHTML = '';  // Clear previous results
+
+        data.items.forEach(item => {
+            var title = item.snippet.title;
+            var videoId = item.id.videoId;
+            var thumbnailUrl = item.snippet.thumbnails.default.url;  // Adjust thumbnail size as needed
+            var resultItem = document.createElement("div");
+            resultItem.innerHTML = `
+                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                    <img src="${thumbnailUrl}" alt="${title}">
+                    <span>${title}</span>
+                </a>`;
+            result.appendChild(resultItem);
+        });
+    }
+</script>
+</body>
+</html>
