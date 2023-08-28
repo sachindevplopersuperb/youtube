@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style type="text/css">
+		*{
+
+margin: 0px;
+padding: 0px;
+box-sizing: border-box;
+		}
+		
+		#container{
+			background: white;
+position: sticky;
+top: 0px;
+width: 100%;
+height: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: row;
+justify-content: space-between;
+		}
+#bell{
+display: flex;
+width: 35px;
+height:25px;
+margin-top: 6px;
+}
+
+#search{
+display: flex;
+width: 35px;
+height:25px;
+margin-top: 6px;
+}
+
+#sidenave{
+	text-align: center;
+	padding: 15px;
+gap: 25px;
+	display: flex;
+}
+#nave{
+
+	padding: 15px;
+}
+
+#container2{
+	overflow: hidden;
+	gap: 35px;
+width: 100%;
+height: 100%;
+	display: flex;width: 100%;
+}
+.compass img{
+
+width: 25px;
+height:25px;
+
+}
+#tag{
+	padding: 5px 15px;
+  border-radius: 20px;
+	text-align: center;
+
+background: lightgrey;
+}
+#darktag{
+	padding: 5px 15px;
+  border-radius: 20px;
+	text-align: center;
+color: white;
+background:black;
+}
+
+#navbar
+{position: absolute;
+	top:0px ;
+display: none;
+width: 300px;
+height: 500vh;
+background: lightgrey;
+font-size: 25px;
+color: black;
+}
+
+
+
+ul li{
+
+margin-top: 25px;
+padding-top: 11px;
+
+}
+ul li a{
+text-decoration: none;
+	list-style:none ;
+
+	color: black;
+}
+#navyou{
+margin-top: 0px;
+padding-top: 0px;
+
+
+}
+#showing{
+
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	width:100%; 
+	overflow: hidden;
+display: grid;
+grid-template-columns: repeat(1, 1fr);
+grid-template-rows:auto ;
+gap: 22px;
+
+}
+#showing>div img{
+
+	width: 351px;
+}
+
+
+
+
+
+
+
+	</style>
+
+
+</head>
+<body>
+<div id="container">
+	<nav id="nave">
+		<img src="youtube.png">
+	</nav>
+<nav id="sidenave"><i id="bell"><img src="bell.png"></i>
+
+<a href="index.yuo.html" id="search"><img src="search.png"></a>
+<i id="avatar"><img src="avatar.png"></i>
+
+
+
+</nav>
+
+
+
+
+
+
+
+
+
+</div>
+<div id="container2">
+	<div id="tag" class="compass" onclick="abc()"><img src="compass.png">
+</div>
+
+	
+	<div id="darktag">ALL</div>
+<div id="tag">Movies</div>
+<div id="tag">Music</div>
+<div id="tag">Game</div>
+<div id="tag">Trending</div>
+<div id="tag">Shorts</div>
+
+
+
+
+</div>
+<div id="navbar">
+<ul>
+	<li id="navyou"><img src="youtube.png"></li>
+	<li><a href="">Trending</a></li>
+<li><a href="">Shopping</a></li>
+<li><a href="">Music</a></li>
+<li><a href="">Movies</a></li>
+</ul>
+
+
+</div>
+<div id="showing"></div>
+<script type="text/javascript">
+	
+var navbar=document.getElementById("navbar");
+function abc(){
+navbar.style.display="block"
+
+
+
+}
+
+let API="AIzaSyCk49QJsUosbKHTMrTDrvHm_XLYLn1NwPA";
+async function superty(){
+	var res=await fetch(`https://youtube.googleapis.com/youtube/v3/search?part=Snippet%20&maxResults=50&regionCode=IN&key=${API}`);
+
+var data=await res.json();
+
+console.log(data.items)
+
+
+
+
+cool(data.items)
+
+
+}
+superty()
+
+function cool(data){
+var showing=document.getElementById("showing");
+data.forEach(({snippet,id:{videoId}})=>{
+
+var img=snippet.thumbnails.high.url;
+var title=snippet.title;
+
+var channelTitle=snippet.channelTitle;
+////////////////////////////
+var div=document.createElement("div");
+var image=document.createElement("img");
+image.src=img;
+var name=document.createElement("p");
+name.innerText=title;
+var Cname=document.createElement("p");
+Cname.innerText=channelTitle;
+
+div.append(image,name,Cname)
+showing.append(div)
+})
+
+
+
+
+}
+
+
+</script>
+</body>
+</html>
